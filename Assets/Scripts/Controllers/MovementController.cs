@@ -1,45 +1,49 @@
 using UnityEngine;
+using Zenject;
 
-public class MovementController : MonoBehaviour
+namespace Controllers
 {
-    [SerializeField] private float speed;
-    [SerializeField] private float gravity = 9.81f;
-    [SerializeField] private Transform cameraTransform;
-
-    private CharacterController controller;
-    private float verticalVelocity;
-
-    void Start()
+    public class MovementController : MonoBehaviour
     {
-        controller = GetComponent<CharacterController>();
-    }
+        [SerializeField] private float speed;
+        [SerializeField] private float gravity = 9.81f;
+        [Inject(Id = "PlayerCamera")] private Transform cameraTransform;
 
-    void Update()
-    {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        private CharacterController controller;
+        private float verticalVelocity;
 
-        Vector3 forward = cameraTransform.forward;
-        forward.y = 0f;
-        forward.Normalize();
-
-        Vector3 right = cameraTransform.right;
-        right.y = 0f;
-        right.Normalize();
-
-        Vector3 moveDirection = (forward * vertical + right * horizontal).normalized * speed;
-
-        if (controller.isGrounded)
+        void Start()
         {
-            verticalVelocity = -1f;
-        }
-        else
-        {
-            verticalVelocity -= gravity * Time.deltaTime;
+            controller = GetComponent<CharacterController>();
         }
 
-        moveDirection.y = verticalVelocity;
+        void Update()
+        {
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");
 
-        controller.Move(moveDirection * Time.deltaTime);
+            Vector3 forward = cameraTransform.forward;
+            forward.y = 0f;
+            forward.Normalize();
+
+            Vector3 right = cameraTransform.right;
+            right.y = 0f;
+            right.Normalize();
+
+            Vector3 moveDirection = (forward * vertical + right * horizontal).normalized * speed;
+
+            if (controller.isGrounded)
+            {
+                verticalVelocity = -1f;
+            }
+            else
+            {
+                verticalVelocity -= gravity * Time.deltaTime;
+            }
+
+            moveDirection.y = verticalVelocity;
+
+            controller.Move(moveDirection * Time.deltaTime);
+        }
     }
 }

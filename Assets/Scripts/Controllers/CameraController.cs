@@ -1,28 +1,31 @@
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+namespace Controllers
 {
-    [SerializeField] private float speed;
-
-    private float rotationX;
-    private float rotationY;
-
-    void Start()
+    public class CameraController : MonoBehaviour
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
+        [SerializeField] private float speed;
 
-    void Update()
-    {
-        float mouseX = Input.GetAxisRaw("Mouse X");
-        float mouseY = Input.GetAxisRaw("Mouse Y");
+        private float rotationX;
+        private float rotationY;
 
-        rotationX += mouseX * speed * Time.deltaTime;
-        rotationY -= mouseY * speed * Time.deltaTime;
+        void Start()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
 
-        rotationY = Mathf.Clamp(rotationY, -80f, 80f);
+        void Update()
+        {
+            float mouseX = Input.GetAxisRaw("Mouse X");
+            float mouseY = Input.GetAxisRaw("Mouse Y");
 
-        transform.rotation = Quaternion.Euler(rotationY, rotationX, 0f);
+            rotationX += mouseX * speed * Time.deltaTime;
+            rotationY -= mouseY * speed * Time.deltaTime;
+
+            rotationY = Mathf.Clamp(rotationY, -80f, 80f);
+
+            transform.rotation = Quaternion.Euler(rotationY, rotationX, 0f);
+        }
     }
 }
