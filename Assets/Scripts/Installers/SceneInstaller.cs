@@ -1,17 +1,27 @@
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using Weapons;
 using Zenject;
 
-public class SceneInstaller : MonoInstaller
+namespace Installers
 {
-    [SerializeField] private Rifle _rifle;
-    [SerializeField] private Camera _camera;
-    [SerializeField] private Transform cameraTransform;
-    public override void InstallBindings()
+    public class SceneInstaller : MonoInstaller
     {
-        Container.Bind<Weapon>().WithId("Rifle").FromInstance(_rifle).AsSingle();
-        Container.Bind<Camera>().FromInstance(_camera).AsSingle();
-        Container.Bind<Transform>().WithId("PlayerCamera").FromInstance(cameraTransform).AsSingle();
+        [SerializeField] private Transform _targetTransform;
+        [SerializeField] private List<Transform> _navPoints;
+
+        public override void InstallBindings()
+        {
+            Container.Bind<Transform>().WithId("Target").FromInstance(_targetTransform).AsSingle();
+
+            foreach (var point in _navPoints)
+            {
+                Container.Bind<Transform>()
+                    .WithId("NavPoint")
+                    .FromInstance(point)
+                    .AsCached();
+            }
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace Weapons
 {
     public class Rifle : Weapon
     {
-        [Inject] private Camera playerCamera;
+        [SerializeField] private Camera playerCamera;
         public override void Shoot()
         {
             if (!CanShoot())
@@ -34,6 +34,9 @@ namespace Weapons
             if (Physics.Raycast(ray.origin, direction, out RaycastHit hit,
                 weaponData.shootDistance, weaponData.hitLayers))
             {
+                IDamageable damageable = hit.collider.GetComponentInParent<IDamageable>();
+                damageable?.TakeDamage(weaponData.damage);
+
                 hitPoint = hit.point;
             }
             else

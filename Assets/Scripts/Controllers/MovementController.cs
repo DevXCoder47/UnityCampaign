@@ -1,3 +1,4 @@
+using Signals;
 using UnityEngine;
 using Zenject;
 
@@ -7,7 +8,9 @@ namespace Controllers
     {
         [SerializeField] private float speed;
         [SerializeField] private float gravity = 9.81f;
-        [Inject(Id = "PlayerCamera")] private Transform cameraTransform;
+        [SerializeField] private Transform cameraTransform;
+        
+        [Inject] private SignalBus _signalBus;
 
         private CharacterController controller;
         private float verticalVelocity;
@@ -15,6 +18,16 @@ namespace Controllers
         void Start()
         {
             controller = GetComponent<CharacterController>();
+        }
+
+        private void OnEnable()
+        {
+            _signalBus.Subscribe<PlayerDiedSignal>(OnPlayerDied);
+        }
+
+        private void OnDisable()
+        {
+            _signalBus.Unsubscribe<PlayerDiedSignal>(OnPlayerDied);
         }
 
         void Update()
@@ -44,6 +57,11 @@ namespace Controllers
             moveDirection.y = verticalVelocity;
 
             controller.Move(moveDirection * Time.deltaTime);
+        }
+
+        private void OnPlayerDied()
+        {
+            enabled = false;
         }
     }
 }
