@@ -11,6 +11,7 @@ namespace Installers
             SignalBusInstaller.Install(Container);
 
             Container.DeclareSignal<DamageTakenSignal>();
+            Container.DeclareSignal<HealthReceivedSignal>();
             Container.DeclareSignal<PlayerDiedSignal>();
             Container.DeclareSignal<EnemyDiedSignal>();
             Container.DeclareSignal<CurrentAmmoChangedSignal>();

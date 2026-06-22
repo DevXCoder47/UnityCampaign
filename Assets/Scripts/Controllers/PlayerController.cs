@@ -1,3 +1,4 @@
+using Game;
 using Signals;
 using System.Collections;
 using Unity.VisualScripting;
@@ -14,6 +15,7 @@ namespace Controllers
         [SerializeField] private float _restartDelay;
 
         [Inject] private SignalBus _signalBus;
+        [Inject] private GameManager _gameManager;
 
         private float _currentHealth;
         private bool _isDead = false;
@@ -39,10 +41,28 @@ namespace Controllers
             }
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            if(other.CompareTag("HealthPickUp") && _currentHealth < _maxHealth) 
+            {
+                ReceiveHealth(50);
+                Destroy(other.gameObject);
+            }
+        }
+
+        private void ReceiveHealth(float amount)
+        {
+            _currentHealth += amount;
+
+            if(_currentHealth > _maxHealth) _currentHealth = _maxHealth;
+
+            _signalBus.Fire(new HealthReceivedSignal() { CurrentHealth = _currentHealth });
+        }
+
         private IEnumerator DieRoutine()
         {
             yield return new WaitForSeconds(_restartDelay);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            _gameManager.RestartLevel();
         }
     }
 }

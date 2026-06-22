@@ -1,5 +1,6 @@
 using Enemies;
 using Signals;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -12,6 +13,8 @@ namespace Game
         [Inject] private GreenBot.Factory _greenBotFactory;
         [Inject] private RedBot.Factory _redBotFactory;
         [Inject] private SignalBus _signalBus;
+
+        [Inject] private GameManager _gameManager;
 
         [SerializeField] private List<WaveInfo> _waves;
 
@@ -35,7 +38,11 @@ namespace Game
 
         private void SpawnNextWave()
         {
-            if (waveIndex >= _waves.Count) return;
+            if (waveIndex >= _waves.Count)
+            {
+                StartCoroutine(CompleteLevelRoutine());
+                return;
+            }
             
             enemiesCount = CountEnemiesInWave(_waves[waveIndex]);
             SpawnWave(_waves[waveIndex]);
@@ -89,6 +96,12 @@ namespace Game
             {
                 SpawnNextWave();
             }
+        }
+
+        private IEnumerator CompleteLevelRoutine()
+        {
+            yield return new WaitForSeconds(2f);
+            _gameManager.CompleteLevel();
         }
     }
 }
