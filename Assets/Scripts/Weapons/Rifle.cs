@@ -1,11 +1,36 @@
+using Signals;
 using UnityEngine;
 using Zenject;
+using DG.Tweening;
+using System.Collections;
 
 namespace Weapons
 {
     public class Rifle : Weapon
     {
         [SerializeField] private Camera playerCamera;
+
+        [SerializeField] private float reloadDownOffset = 0.5f;
+        [SerializeField] private float reloadAnimDuration = 0.25f;
+
+        [Inject] private SignalBus _signalBus;
+
+        private Vector3 _startLocalPosition;
+
+        protected override void Start()
+        {
+            base.Start();
+            _signalBus.Fire(new CurrentAmmoChangedSignal() { CurrentAmmo = currentAmmo });
+
+            _startLocalPosition = transform.localPosition;
+        }
+
+        public override void Reload()
+        {
+            StartCoroutine(ReloadRoutine());
+            _signalBus.Fire(new CurrentAmmoChangedSignal() { CurrentAmmo = currentAmmo });
+        }
+
         public override void Shoot()
         {
             if (!CanShoot())
@@ -22,7 +47,7 @@ namespace Weapons
 
             Vector3 direction = ray.direction;
 
-            Vector2 spread = Random.insideUnitCircle * CurrentSpread;
+            Vector2 spread = Random.insideUnitCircle * currentSpread;
 
             direction += playerCamera.transform.right * spread.x;
             direction += playerCamera.transform.up * spread.y;
@@ -47,6 +72,34 @@ namespace Weapons
             SpawnTracer(hitPoint);
 
             IncreaseSpread();
+
+            currentAmmo--;
+            _signalBus.Fire(new CurrentAmmoChangedSignal() { CurrentAmmo = currentAmmo });
+        }
+
+        protected override IEnumerator ReloadRoutine()
+        {
+            isReloading = true;
+
+            Vector3 downPosition =
+                _startLocalPosition + Vector3.down * reloadDownOffset;
+
+            yield return transform
+                .DOLocalMove(downPosition, reloadAnimDuration)
+                .SetEase(Ease.InQuad)
+                .WaitForCompletion();
+
+            yield return new WaitForSeconds(weaponData.reloadingTime);
+
+            currentAmmo = weaponData.maxAmmo;
+            _signalBus.Fire(new CurrentAmmoChangedSignal() { CurrentAmmo = currentAmmo });
+
+            yield return transform
+                .DOLocalMove(_startLocalPosition, reloadAnimDuration)
+                .SetEase(Ease.OutQuad)
+                .WaitForCompletion();
+
+            isReloading = false;
         }
     }
 }

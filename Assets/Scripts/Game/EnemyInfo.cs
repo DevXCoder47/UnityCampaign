@@ -6,7 +6,9 @@ namespace Game
 {
     public enum EnemyType
     {
-        BlueBot
+        BlueBot,
+        GreenBot,
+        RedBot
     }
 
     [Serializable]

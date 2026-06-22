@@ -1,4 +1,5 @@
 using Data;
+using System.Collections;
 using UnityEngine;
 
 namespace Weapons {
@@ -7,13 +8,20 @@ namespace Weapons {
         [SerializeField] protected WeaponData weaponData;
         [SerializeField] protected Transform muzzlePosition;
 
-        protected float CurrentSpread;
+        protected float currentSpread;
+        protected int currentAmmo;
+        protected bool isReloading = false;
 
         private float _nextShotTime;
 
+        public int CurrentAmmo => currentAmmo;
+        public int MaxAmmo => weaponData.maxAmmo;
+        public bool IsReloading => isReloading;
+
         protected virtual void Start()
         {
-            CurrentSpread = weaponData.baseSpread;
+            currentSpread = weaponData.baseSpread;
+            currentAmmo = weaponData.maxAmmo;
         }
 
         protected virtual void Update()
@@ -23,22 +31,26 @@ namespace Weapons {
 
         protected void IncreaseSpread()
         {
-            CurrentSpread += weaponData.spreadIncrease;
+            currentSpread += weaponData.spreadIncrease;
 
-            if (CurrentSpread > weaponData.maxSpread)
-                CurrentSpread = weaponData.maxSpread;
+            if (currentSpread > weaponData.maxSpread)
+                currentSpread = weaponData.maxSpread;
         }
 
         protected void RecoverSpread()
         {
-            CurrentSpread = Mathf.MoveTowards(
-                CurrentSpread,
+            currentSpread = Mathf.MoveTowards(
+                currentSpread,
                 weaponData.baseSpread,
                 weaponData.spreadDecrease * Time.deltaTime);
         }
 
         public abstract void Shoot();
 
+        public abstract void Reload();
+
+        protected abstract IEnumerator ReloadRoutine();
+        
         protected void SpawnMuzzleFlash()
         {
             if (weaponData.muzzleFlashPrefab == null)

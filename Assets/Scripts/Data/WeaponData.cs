@@ -29,5 +29,9 @@ namespace Data
         [Header("Muzzle flash settings")]
         public GameObject muzzleFlashPrefab;
         public float muzzleFlashDuration;
+
+        [Header("Ammo settings")]
+        public int maxAmmo;
+        public float reloadingTime;
     }
 }

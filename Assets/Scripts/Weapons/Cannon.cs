@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using Zenject;
 
@@ -6,6 +7,14 @@ namespace Weapons
     public class Cannon : Weapon
     {
         [Inject(Id = "Target")] private Transform _target;
+
+        public override void Reload()
+        {
+            if(isReloading) return;
+        
+            StartCoroutine(ReloadRoutine());
+        }
+
         public override void Shoot()
         {
             if (!CanShoot())
@@ -56,6 +65,16 @@ namespace Weapons
             }
 
             SpawnTracer(hitPoint);
+
+            currentAmmo--;
+        }
+
+        protected override IEnumerator ReloadRoutine()
+        {
+            isReloading = true;
+            yield return new WaitForSeconds(weaponData.reloadingTime);
+            currentAmmo = weaponData.maxAmmo;
+            isReloading = false;
         }
     }
 }

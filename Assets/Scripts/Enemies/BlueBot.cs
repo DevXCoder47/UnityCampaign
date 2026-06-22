@@ -33,6 +33,8 @@ namespace Enemies
             RotateToTarget();
 
             if(IsInConus() && IsInPlaneView()) Shoot();
+
+            if (_weapon.CurrentAmmo == 0) _weapon.Reload();
         }
 
         private IEnumerator MovementLoop()
@@ -55,6 +57,11 @@ namespace Enemies
             _movementTarget = _navPoints[index];
 
             _agent.SetDestination(_movementTarget.position);
+        }
+
+        protected override void Shoot()
+        {
+            if(!_weapon.IsReloading) _weapon.Shoot();
         }
 
         public class Factory : PlaceholderFactory<BlueBot>

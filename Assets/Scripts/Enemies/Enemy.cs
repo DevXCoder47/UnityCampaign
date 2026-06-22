@@ -15,7 +15,7 @@ namespace Enemies
         [SerializeField] private float _maxConusRadius = 20f;
         [SerializeField] private float _minConusRadius = 0f;
 
-        [SerializeField] private Weapon _weapon;
+        [SerializeField] protected Weapon _weapon;
 
         [Inject(Id = "Target")] private Transform _target;
         [Inject] private SignalBus _signalBus; 
@@ -45,11 +45,8 @@ namespace Enemies
                 _turnSpeed * Time.deltaTime);
         }
 
-        protected void Shoot() 
-        {
-            _weapon.Shoot();
-        }
-
+        protected abstract void Shoot();
+        
         protected bool IsInConus()
         {
             if (_target == null)

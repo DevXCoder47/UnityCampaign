@@ -13,6 +13,7 @@ namespace Installers
             Container.DeclareSignal<DamageTakenSignal>();
             Container.DeclareSignal<PlayerDiedSignal>();
             Container.DeclareSignal<EnemyDiedSignal>();
+            Container.DeclareSignal<CurrentAmmoChangedSignal>();
         }
     }
 }

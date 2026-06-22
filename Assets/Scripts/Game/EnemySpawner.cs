@@ -9,6 +9,8 @@ namespace Game
     public class EnemySpawner : MonoBehaviour
     {
         [Inject] private BlueBot.Factory _blueBotFactory;
+        [Inject] private GreenBot.Factory _greenBotFactory;
+        [Inject] private RedBot.Factory _redBotFactory;
         [Inject] private SignalBus _signalBus;
 
         [SerializeField] private List<WaveInfo> _waves;
@@ -49,8 +51,18 @@ namespace Game
                     switch(enemyInfo.type)
                     {
                         case EnemyType.BlueBot:
-                            var bot = _blueBotFactory.Create();
-                            bot.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
+                            var blueBot = _blueBotFactory.Create();
+                            blueBot.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
+                            break;
+
+                        case EnemyType.GreenBot:
+                            var greenBot = _greenBotFactory.Create();
+                            greenBot.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
+                            break;
+
+                        case EnemyType.RedBot:
+                            var redBot = _redBotFactory.Create();
+                            redBot.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
                             break;
                     }
                 }

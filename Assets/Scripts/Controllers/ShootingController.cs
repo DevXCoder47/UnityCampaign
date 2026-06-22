@@ -25,7 +25,12 @@ namespace Controllers
         {
             if(Input.GetMouseButton(0))
             {
-                _weapon.Shoot();
+                if (!_weapon.IsReloading) _weapon.Shoot();
+            }
+
+            if(Input.GetKeyDown(KeyCode.R) || _weapon.CurrentAmmo == 0)
+            {
+                if (!_weapon.IsReloading && _weapon.CurrentAmmo != _weapon.MaxAmmo) _weapon.Reload();
             }
         }
 

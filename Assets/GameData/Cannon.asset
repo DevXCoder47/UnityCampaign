@@ -27,3 +27,5 @@ MonoBehaviour:
   shotSound: {fileID: 8300000, guid: 2203773368e4340d98c114f55c2dd7fd, type: 3}
   muzzleFlashPrefab: {fileID: 8964683860703370647, guid: e173adb7e10c784498ebf648ebab4243, type: 3}
   muzzleFlashDuration: 0.1
+  maxAmmo: 10
+  reloadingTime: 2
