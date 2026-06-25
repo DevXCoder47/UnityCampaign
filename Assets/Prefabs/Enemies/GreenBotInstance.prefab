@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4278088853961721457}
   - component: {fileID: 3296045433783841830}
   - component: {fileID: 1275032713993899766}
+  - component: {fileID: 2286286068726291639}
   m_Layer: 0
   m_Name: Arm
   m_TagString: Untagged
@@ -112,6 +113,33 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &2286286068726291639
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 925192479505413331}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &3749895374093414101
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,6 +183,7 @@ GameObject:
   - component: {fileID: 7738839688405974673}
   - component: {fileID: 6653654153299571343}
   - component: {fileID: 7896277310486517813}
+  - component: {fileID: 7717970712862382264}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -255,6 +284,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &7717970712862382264
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4096724532314977464}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &4360265707748334207
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,10 +358,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.GreenBot
   _turnSpeed: 120
-  _maxHealth: 100
+  _maxHealth: 75
   _viewAngle: 60
   _maxConusRadius: 40
   _minConusRadius: 0
+  _agent: {fileID: 823422695390636635}
   _weapon: {fileID: 6744153486901837796}
   _minSeconds: 1
   _maxSeconds: 3
@@ -379,6 +436,7 @@ GameObject:
   - component: {fileID: 6937666521616776591}
   - component: {fileID: 1917956786096445716}
   - component: {fileID: 6744153486901837796}
+  - component: {fileID: 2471204777089396270}
   m_Layer: 0
   m_Name: MachineGun
   m_TagString: Untagged
@@ -496,6 +554,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Weapons.MachineGun
   weaponData: {fileID: 11400000, guid: 0814d1354000dbf47a24a7997558dd9a, type: 2}
   muzzlePosition: {fileID: 643127843464382075}
+--- !u!54 &2471204777089396270
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4864447700542456540}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8393965820684382238
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,6 +593,7 @@ GameObject:
   - component: {fileID: 1799174549959711224}
   - component: {fileID: 1364540315325474806}
   - component: {fileID: 5720103041315911973}
+  - component: {fileID: 4100394318031868734}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -608,3 +694,30 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &4100394318031868734
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8393965820684382238}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

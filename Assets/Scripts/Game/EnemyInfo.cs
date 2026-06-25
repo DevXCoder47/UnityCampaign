@@ -8,7 +8,9 @@ namespace Game
     {
         BlueBot,
         GreenBot,
-        RedBot
+        RedBot,
+        YellowTurret,
+        PinkDrone
     }
 
     [Serializable]

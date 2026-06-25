@@ -16,6 +16,27 @@ namespace Weapons
         [Inject] private SignalBus _signalBus;
 
         private Vector3 _startLocalPosition;
+        private bool isActive = true;
+
+        private void OnEnable()
+        {
+            _signalBus.Subscribe<PlayerDiedSignal>(OnPlayerDied);
+        }
+
+        private void OnDisable()
+        {
+            _signalBus.Unsubscribe<PlayerDiedSignal>(OnPlayerDied);
+        }
+
+        private void OnPlayerDied()
+        {
+            isActive = false;
+
+            StopAllCoroutines();
+            DOTween.Kill(transform);
+
+            isReloading = false;
+        }
 
         protected override void Start()
         {
@@ -33,7 +54,7 @@ namespace Weapons
 
         public override void Shoot()
         {
-            if (!CanShoot())
+            if (!CanShoot() || !isActive)
                 return;
 
             SpawnMuzzleFlash();
@@ -89,7 +110,11 @@ namespace Weapons
                 .SetEase(Ease.InQuad)
                 .WaitForCompletion();
 
+            if (!isActive) yield break;
+
             yield return new WaitForSeconds(weaponData.reloadingTime);
+
+            if (!isActive) yield break;
 
             currentAmmo = weaponData.maxAmmo;
             _signalBus.Fire(new CurrentAmmoChangedSignal() { CurrentAmmo = currentAmmo });

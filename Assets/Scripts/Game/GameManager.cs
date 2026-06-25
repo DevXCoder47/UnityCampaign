@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -19,7 +20,12 @@ namespace Game
         {
             if (CurrentSceneIndex + 1 >= _scenes.Count)
             {
-                Application.Quit();
+#if UNITY_EDITOR
+                EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+                return;
             }
 
             CurrentSceneIndex++;

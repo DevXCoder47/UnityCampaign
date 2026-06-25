@@ -60,6 +60,8 @@ namespace UI
 
         private void OnHealthReceived(HealthReceivedSignal signal)
         {
+            if(signal.CurrentHealth >= 50) _healthText.color = Color.green;
+
             if (signal.CurrentHealth < 50 && signal.CurrentHealth >= 25) _healthText.color = Color.yellow;
 
             if (signal.CurrentHealth < 25) _healthText.color = Color.red;

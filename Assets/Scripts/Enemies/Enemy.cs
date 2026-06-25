@@ -1,8 +1,11 @@
 using Signals;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Weapons;
 using Zenject;
+using static UnityEngine.GraphicsBuffer;
 
 namespace Enemies
 {
@@ -15,24 +18,45 @@ namespace Enemies
         [SerializeField] private float _maxConusRadius = 20f;
         [SerializeField] private float _minConusRadius = 0f;
 
+        [SerializeField] protected NavMeshAgent _agent;
         [SerializeField] protected Weapon _weapon;
 
-        [Inject(Id = "Target")] private Transform _target;
-        [Inject] private SignalBus _signalBus; 
+        [Inject(Id = "Target")] private Transform _playerTarget;
 
+        [Inject(Id = "Head")] private Transform _playerHead;
+        [Inject(Id = "Chest")] private Transform _playerChest;
+        [Inject(Id = "Feet")] private Transform _playerFeet;
+
+
+        [Inject] private SignalBus _signalBus;
+
+        protected bool _isDead = false;
         private float _currentHealth;
+        private Rigidbody[] _ragdollBodies;
+
+        protected virtual void Awake()
+        {
+            _ragdollBodies = GetComponentsInChildren<Rigidbody>(true);
+
+            foreach (var rb in _ragdollBodies)
+            {
+                rb.isKinematic = true;
+                rb.useGravity = false;
+            }
+        }
 
         protected virtual void Start()
         {
             _currentHealth = _maxHealth;
         }
 
+
         protected void RotateToTarget()
         {
-            if (_target == null)
+            if (_playerTarget == null)
                 return;
 
-            Vector3 direction = _target.position - transform.position;
+            Vector3 direction = _playerTarget.position - transform.position;
 
             if (direction.sqrMagnitude < 0.0001f)
                 return;
@@ -49,10 +73,10 @@ namespace Enemies
         
         protected bool IsInConus()
         {
-            if (_target == null)
+            if (_playerTarget == null)
                 return false;
 
-            Vector3 toTarget = _target.position - transform.position;
+            Vector3 toTarget = _playerTarget.position - transform.position;
 
             float distance = toTarget.magnitude;
 
@@ -66,18 +90,20 @@ namespace Enemies
 
         protected bool IsInPlaneView()
         {
-            if (_target == null)
-                return false;
+            return CanSeePoint(_playerHead) || CanSeePoint(_playerChest) || CanSeePoint(_playerFeet);
+        }
 
+        private bool CanSeePoint(Transform point)
+        {
             Vector3 origin = transform.position;
-            Vector3 direction = (_target.position - origin).normalized;
+            Vector3 direction = point.position - origin;
 
-            float distance = Vector3.Distance(origin, _target.position);
+            float distance = direction.magnitude;
 
-            if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
+            if (Physics.Raycast(origin, direction.normalized,
+                out RaycastHit hit, distance))
             {
-                return hit.transform == _target &&
-                       hit.transform.CompareTag("Player");
+                return hit.collider.CompareTag("Player");
             }
 
             return false;
@@ -85,12 +111,37 @@ namespace Enemies
 
         public void TakeDamage(float damage)
         {
+            if (_isDead) return;
+
             _currentHealth -= damage;
 
             if(_currentHealth <= 0)
             {
                 _signalBus.Fire<EnemyDiedSignal>();
-                Destroy(gameObject);
+                StartCoroutine(DieRoutine());
+            }
+        }
+
+        private IEnumerator DieRoutine()
+        {
+            _isDead = true;
+
+            EnableRagdoll();
+
+            yield return new WaitForSeconds(3f);
+            Destroy(gameObject);
+        }
+
+        private void EnableRagdoll()
+        {
+            if (_agent != null)
+                _agent.enabled = false;
+
+            foreach (var rb in _ragdollBodies)
+            {
+                rb.isKinematic = false;
+                rb.useGravity = true;
+                rb.AddForce(Random.insideUnitSphere * 10f, ForceMode.Impulse);
             }
         }
     }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4827669179613705393}
   - component: {fileID: 6707871917747775319}
   - component: {fileID: 1222660070514094088}
+  - component: {fileID: 6710358882579944793}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -112,6 +113,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &6710358882579944793
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6236542207236277472}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7683798924849590481
 GameObject:
   m_ObjectHideFlags: 0
@@ -124,6 +152,7 @@ GameObject:
   - component: {fileID: 8660199548703548663}
   - component: {fileID: 7994937965037207432}
   - component: {fileID: 6796453092379198389}
+  - component: {fileID: 8321890877038258636}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -224,6 +253,33 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &8321890877038258636
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7683798924849590481}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7705327119448661045
 GameObject:
   m_ObjectHideFlags: 0
@@ -271,10 +327,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.BlueBot
   _turnSpeed: 120
-  _maxHealth: 100
+  _maxHealth: 50
   _viewAngle: 60
   _maxConusRadius: 40
   _minConusRadius: 0
+  _agent: {fileID: 8237130890998231334}
   _weapon: {fileID: 8229247169434811750}
   _minSeconds: 1
   _maxSeconds: 3
@@ -347,6 +404,7 @@ GameObject:
   - component: {fileID: 8595686758906690137}
   - component: {fileID: 2891832720473151246}
   - component: {fileID: 168487692699426568}
+  - component: {fileID: 3125478159654174261}
   m_Layer: 0
   m_Name: Arm
   m_TagString: Untagged
@@ -447,6 +505,33 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &3125478159654174261
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8976594965966494314}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &4055908466201746053
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -502,7 +587,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5623594654247958889, guid: 54e645a4cb57eab4cbb867b7eb6f8739, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1341182772039857242}
   m_SourcePrefab: {fileID: 100100000, guid: 54e645a4cb57eab4cbb867b7eb6f8739, type: 3}
 --- !u!4 &6768718914974503834 stripped
 Transform:
@@ -514,9 +602,41 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5367538629582825443, guid: 54e645a4cb57eab4cbb867b7eb6f8739, type: 3}
   m_PrefabInstance: {fileID: 4055908466201746053}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 8521512843307672556}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c40f93f83455e8e488d522490f6de30e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Weapons.Cannon
+--- !u!1 &8521512843307672556 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5623594654247958889, guid: 54e645a4cb57eab4cbb867b7eb6f8739, type: 3}
+  m_PrefabInstance: {fileID: 4055908466201746053}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &1341182772039857242
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8521512843307672556}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

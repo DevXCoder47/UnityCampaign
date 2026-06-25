@@ -12,6 +12,8 @@ namespace Game
         [Inject] private BlueBot.Factory _blueBotFactory;
         [Inject] private GreenBot.Factory _greenBotFactory;
         [Inject] private RedBot.Factory _redBotFactory;
+        [Inject] private YellowTurret.Factory _yellowTurretFactory;
+        [Inject] private PinkDrone.Factory _pinkDroneFactory;
         [Inject] private SignalBus _signalBus;
 
         [Inject] private GameManager _gameManager;
@@ -70,6 +72,16 @@ namespace Game
                         case EnemyType.RedBot:
                             var redBot = _redBotFactory.Create();
                             redBot.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
+                            break;
+
+                        case EnemyType.YellowTurret:
+                            var yellowTurret = _yellowTurretFactory.Create();
+                            yellowTurret.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
+                            break;
+
+                        case EnemyType.PinkDrone:
+                            var pinkDrone = _pinkDroneFactory.Create();
+                            pinkDrone.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
                             break;
                     }
                 }

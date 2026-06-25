@@ -18,13 +18,10 @@ namespace Enemies
 
         [Inject(Id = "NavPoint")] private List<Transform> _navPoints;
 
-        private NavMeshAgent _agent;
-
         protected override void Start()
         {
             base.Start();
 
-            _agent = GetComponent<NavMeshAgent>();
             _agent.updateRotation = false;
 
             StartCoroutine(MovementLoop());
@@ -32,6 +29,8 @@ namespace Enemies
 
         private void Update()
         {
+            if (_isDead) return;
+
             RotateToTarget();
 
             if (IsInConus() && IsInPlaneView()) Shoot();
@@ -44,6 +43,8 @@ namespace Enemies
         {
             while (true)
             {
+                if (_isDead) yield break;
+
                 SwitchMovementTarget();
 
                 float waitTime = Random.Range(_minSeconds, _maxSeconds);
