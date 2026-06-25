@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using DG.Tweening;
 using UnityEngine.SceneManagement;
 
 namespace Game
@@ -18,6 +19,8 @@ namespace Game
 
         public void CompleteLevel()
         {
+            KillAllTweens();
+
             if (CurrentSceneIndex + 1 >= _scenes.Count)
             {
 #if UNITY_EDITOR
@@ -34,11 +37,13 @@ namespace Game
 
         public void RestartLevel()
         {
+            KillAllTweens();
             LoadCurrentScene();
         }
 
         public void StartGame()
         {
+            KillAllTweens();
             CurrentSceneIndex = 0;
             LoadCurrentScene();
         }
@@ -46,6 +51,11 @@ namespace Game
         private void LoadCurrentScene()
         {
             SceneManager.LoadScene(_scenes[CurrentSceneIndex]);
+        }
+
+        private void KillAllTweens()
+        {
+            DOTween.KillAll();
         }
     }
 }
