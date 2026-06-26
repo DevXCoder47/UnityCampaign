@@ -369,7 +369,7 @@ Transform:
   m_GameObject: {fileID: 84823000}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -14.33452, y: -6.1693, z: 34.86001}
+  m_LocalPosition: {x: 1.68, y: -6.1693, z: 34.86001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2168,7 +2168,7 @@ Transform:
   m_GameObject: {fileID: 848149656}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -24.24452, y: -6.1693, z: 33.840008}
+  m_LocalPosition: {x: -31.53, y: -6.1693, z: 33.840008}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2822,7 +2822,7 @@ Transform:
   m_GameObject: {fileID: 1108510639}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.45452, y: -6.1693, z: 34.88001}
+  m_LocalPosition: {x: -26.23, y: -6.1693, z: 43.19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4075,7 +4075,7 @@ Transform:
   m_GameObject: {fileID: 1737373571}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.61452, y: -6.1693, z: 36.660007}
+  m_LocalPosition: {x: -16.62, y: -6.1693, z: 36.660007}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4581,7 +4581,7 @@ Transform:
   m_GameObject: {fileID: 1868128070}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -17.38452, y: -6.1693, z: 35.270008}
+  m_LocalPosition: {x: -2.57, y: -6.1693, z: 42.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4892,6 +4892,10 @@ PrefabInstance:
     - target: {fileID: 270288160883894403, guid: f0ee6a083aabb48458f882348343edb4, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 270288160883894403, guid: f0ee6a083aabb48458f882348343edb4, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 270288160883894403, guid: f0ee6a083aabb48458f882348343edb4, type: 3}
       propertyPath: m_TagString
@@ -5711,6 +5715,6 @@ SceneRoots:
   - {fileID: 8207015561431328744}
   - {fileID: 477027048}
   - {fileID: 1767043658}
-  - {fileID: 1399906888}
   - {fileID: 946098097}
   - {fileID: 1655945528}
+  - {fileID: 1399906888}

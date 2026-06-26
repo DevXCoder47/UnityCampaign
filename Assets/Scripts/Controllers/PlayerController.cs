@@ -34,7 +34,6 @@ namespace Controllers
 
             if (_currentHealth <= 0)
             {
-                Debug.Log("Player Died");
                 _isDead = true;
                 _signalBus.Fire<PlayerDiedSignal>();
                 StartCoroutine(DieRoutine());
