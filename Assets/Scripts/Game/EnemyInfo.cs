@@ -10,7 +10,8 @@ namespace Game
         GreenBot,
         RedBot,
         YellowTurret,
-        PinkDrone
+        PinkDrone,
+        Boss
     }
 
     [Serializable]

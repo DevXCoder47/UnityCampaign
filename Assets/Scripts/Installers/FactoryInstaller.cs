@@ -11,6 +11,7 @@ namespace Installers
         [SerializeField] private RedBot _redBotPrefab;
         [SerializeField] private YellowTurret _yellowTurretPrefab;
         [SerializeField] private PinkDrone _pinkDronePrefab;
+        [SerializeField] private Boss _bossPrefab;
 
         public override void InstallBindings()
         {
@@ -19,6 +20,7 @@ namespace Installers
             Container.BindFactory<RedBot, RedBot.Factory>().FromComponentInNewPrefab(_redBotPrefab);
             Container.BindFactory<YellowTurret, YellowTurret.Factory>().FromComponentInNewPrefab(_yellowTurretPrefab);
             Container.BindFactory<PinkDrone, PinkDrone.Factory>().FromComponentInNewPrefab(_pinkDronePrefab);
+            Container.BindFactory<Boss, Boss.Factory>().FromComponentInNewPrefab(_bossPrefab);
         }
     }
 }
