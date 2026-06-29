@@ -1,9 +1,7 @@
 using Game;
 using Signals;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Weapons;
 using Zenject;
 

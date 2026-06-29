@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using UnityEditorInternal;
 
 namespace Game
 {
@@ -11,6 +12,7 @@ namespace Game
         private readonly List<string> _scenes;
 
         public int CurrentSceneIndex { get; private set; }
+        public bool GameFinished { get; set; } = false;
 
         public GameManager(List<string> scenes)
         {
@@ -23,11 +25,12 @@ namespace Game
 
             if (CurrentSceneIndex + 1 >= _scenes.Count)
             {
-#if UNITY_EDITOR
-                EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+                GameFinished = true;
+
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible = true;
+
+                LoadMainMenuScene();
                 return;
             }
 
@@ -51,6 +54,11 @@ namespace Game
         private void LoadCurrentScene()
         {
             SceneManager.LoadScene(_scenes[CurrentSceneIndex]);
+        }
+
+        private void LoadMainMenuScene()
+        {
+            SceneManager.LoadScene("MainMenu");
         }
 
         private void KillAllTweens()
