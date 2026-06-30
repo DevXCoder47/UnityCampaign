@@ -1,12 +1,16 @@
 using Data;
+using Services;
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 namespace Weapons {
     public abstract class Weapon : MonoBehaviour
     {
         [SerializeField] protected WeaponData weaponData;
         [SerializeField] protected Transform muzzlePosition;
+
+        [Inject] protected IAudioService _audioService;
 
         protected float currentSpread;
         protected int currentAmmo;
@@ -80,16 +84,8 @@ namespace Weapons {
             Destroy(tracer.gameObject, weaponData.tracerDuration);
         }
 
-        protected void PlayShotSound()
-        {
-            if (weaponData.shotSound == null)
-                return;
-
-            AudioSource.PlayClipAtPoint(
-                weaponData.shotSound,
-                muzzlePosition.position);
-        }
-
+        protected abstract void PlayShotSound();
+       
         protected bool CanShoot()
         {
             if (Time.time < _nextShotTime)

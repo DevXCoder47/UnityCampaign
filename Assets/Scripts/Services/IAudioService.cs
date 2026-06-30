@@ -1,12 +1,21 @@
 using UnityEngine;
 
-public interface IAudioService
+namespace Services
 {
-    public void PlayMenuMusic();
-    public void PlayGameMusic();
-    public void PlayPlayerShotSound(Vector3 position);
-    public void PlayEnemyShotSound(Vector3 position);
-    public void PlayButtonClick();
+    public interface IAudioService
+    {
+        float MusicVolume { get; set; }
+        float SfxVolume { get; set; }
 
-    public void StopCurrentMusic();
+        bool MusicEnabled { get; set; }
+        bool SfxEnabled { get; set; }
+
+        public void PlayMenuMusic();
+        public void PlayGameMusic();
+        public void PlayPlayerShotSound(Vector3 position);
+        public void PlayEnemyShotSound(Vector3 position);
+        public void PlayButtonClick();
+
+        public void StopCurrentMusic();
+    }
 }

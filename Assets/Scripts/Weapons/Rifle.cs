@@ -126,5 +126,10 @@ namespace Weapons
 
             isReloading = false;
         }
+
+        protected override void PlayShotSound()
+        {
+            _audioService.PlayPlayerShotSound(muzzlePosition.position);
+        }
     }
 }

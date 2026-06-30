@@ -23,9 +23,6 @@ namespace Data
         public float spreadIncrease;
         public float spreadDecrease;
 
-        [Header("Sound settings")]
-        public AudioClip shotSound;
-
         [Header("Muzzle flash settings")]
         public GameObject muzzleFlashPrefab;
         public float muzzleFlashDuration;

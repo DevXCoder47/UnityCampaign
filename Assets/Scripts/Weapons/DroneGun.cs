@@ -69,6 +69,11 @@ namespace Weapons
             currentAmmo--;
         }
 
+        protected override void PlayShotSound()
+        {
+            _audioService.PlayEnemyShotSound(muzzlePosition.position);
+        }
+
         protected override IEnumerator ReloadRoutine()
         {
             isReloading = true;
