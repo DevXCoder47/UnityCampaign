@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -13,7 +14,13 @@ namespace Services
         [SerializeField] private int _poolSize;
         [SerializeField] private AudioSource _audioSourcePrefab;
 
+        private const string MUSIC_VOLUME_KEY = "MusicVolume";
+        private const string SFX_VOLUME_KEY = "SfxVolume";
+        private const string MUSIC_ENABLED_KEY = "MusicEnabled";
+        private const string SFX_ENABLED_KEY = "SfxEnabled";
+
         private List<AudioSource> _sfxSourcePool;
+        private Coroutine _saveRoutine;
 
         private int _nextIndex;
 
@@ -29,6 +36,13 @@ namespace Services
             {
                 _musicVolume = Mathf.Clamp01(value);
                 ApplyMusicVolume();
+
+                if (_saveRoutine != null)
+                {
+                    StopCoroutine(_saveRoutine);
+                    _saveRoutine = null;
+                }
+                _saveRoutine = StartCoroutine(SaveRoutine());
             } 
         }
 
@@ -39,6 +53,13 @@ namespace Services
             {
                 _sfxVolume = Mathf.Clamp01(value);
                 ApplySfxVolume();
+
+                if (_saveRoutine != null)
+                {
+                    StopCoroutine(_saveRoutine);
+                    _saveRoutine = null;
+                }
+                _saveRoutine = StartCoroutine(SaveRoutine());
             } 
         }
 
@@ -54,6 +75,7 @@ namespace Services
                     PlayMenuMusic();
                 else
                     StopCurrentMusic();
+                SaveSettings();
             } 
         }
         public bool SfxEnabled 
@@ -63,6 +85,7 @@ namespace Services
             {
                 _sfxEnabled = value;
                 ApplySfxVolume();
+                SaveSettings();
             } 
         }
 
@@ -76,7 +99,13 @@ namespace Services
                 _sfxSourcePool.Add(source);
             }
 
+            LoadSettings();
             ApplyAll();
+        }
+
+        private void OnApplicationQuit()
+        {
+            SaveSettings();
         }
 
         public void PlayButtonClick()
@@ -189,6 +218,30 @@ namespace Services
         {
             ApplyMusicVolume();
             ApplySfxVolume();
+        }
+
+        private void SaveSettings()
+        {
+            PlayerPrefs.SetFloat(MUSIC_VOLUME_KEY, _musicVolume);
+            PlayerPrefs.SetFloat(SFX_VOLUME_KEY, _sfxVolume);
+            PlayerPrefs.SetInt(MUSIC_ENABLED_KEY, _musicEnabled ? 1 : 0);
+            PlayerPrefs.SetInt(SFX_ENABLED_KEY, _sfxEnabled ? 1 : 0);
+
+            PlayerPrefs.Save();
+        }
+
+        private void LoadSettings()
+        {
+            _musicVolume = PlayerPrefs.GetFloat(MUSIC_VOLUME_KEY, 1f);
+            _sfxVolume = PlayerPrefs.GetFloat(SFX_VOLUME_KEY, 1f);
+            _musicEnabled = PlayerPrefs.GetInt(MUSIC_ENABLED_KEY, 1) == 1;
+            _sfxEnabled = PlayerPrefs.GetInt(SFX_ENABLED_KEY, 1) == 1;
+        }
+
+        private IEnumerator SaveRoutine()
+        {
+            yield return new WaitForSeconds(0.5f);
+            SaveSettings();
         }
     }
 }

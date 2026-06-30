@@ -48,15 +48,19 @@ namespace UI
 
         private void Start()
         {
-            _musicSlider.SetValueWithoutNotify(_audioService.MusicVolume);
-            _sfxSlider.SetValueWithoutNotify(_audioService.SfxVolume);
-
-            _musicToggle.SetIsOnWithoutNotify(_audioService.MusicEnabled);
-            _sfxToggle.SetIsOnWithoutNotify(_audioService.SfxEnabled);
-
+            SetupSettings();
             _audioService.StopCurrentMusic();
             _audioService.PlayMenuMusic();
             Navigate(_gameManager.GameFinished ? Navigation.Ending : Navigation.MainMenu);
+        }
+
+        private void SetupSettings()
+        {
+            _musicSlider.value = _audioService.MusicVolume;
+            _sfxSlider.value = _audioService.SfxVolume;
+
+            _musicToggle.isOn = _audioService.MusicEnabled;
+            _sfxToggle.isOn = _audioService.SfxEnabled;
         }
 
         private void ShowCurrentNavigation()
